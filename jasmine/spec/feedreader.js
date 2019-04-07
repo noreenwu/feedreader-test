@@ -63,17 +63,8 @@ $(function() {
          * hiding/showing of the menu element.
          */
 
+
     describe('The menu', function() {
-      // let mi =  document.getElementsByClassName("menu-icon-link");
-
-
-      it('is hidden by default', function(done) {
-          expect(document.body.classList).toContain("menu-hidden");
-          done();
-      })
-    });
-
-    describe('The menu when clicked', function() {
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
@@ -82,41 +73,28 @@ $(function() {
 
         var menuIcon = new MenuIcon();
 
-        beforeEach(function(done) {
-           menuIcon.clickMe();
-           done();
+        it('is hidden by default', function(done) {
+            menuIcon.clickMe(done, 0);
+            expect(document.body.classList).toContain("menu-hidden");
+            done();
         });
 
-        // afterEach(function(done) {
-        //    menuIcon.clickMe();
-        //    done();
-        // });
-
         it('is displayed when clicked once', function(done) {
+            menuIcon.clickMe(done, 1);
             expect(document.body.classList).not.toContain("menu-hidden");
             done();
          });
 
-         // it('is NOT displayed when clicked twice', function(done) {
-         //     // menuIcon.clickMe();
-         //     expect(document.body.classList).toContain("menu-hidden");
-         //     done();
-         //  });
+        it('is NOT displayed when clicked TWICE', function(done) {
+             menuIcon.clickMe(done, 1);
+             // menuIcon.clickMe(done);
+             console.log("clicked from it spec (2x)");
+             expect(document.body.classList).toContain("menu-hidden");
+             done();
+        });
 
     });
 
-
-    //   it('is displayed when clicked once', function(done) {
-    //      expect(document.body.classList).not.toContain("menu-hidden");
-    //      done();
-    //   })
-    //
-    //   it('is not displayed when clicked a second time', function(done) {
-    //      expect(document.body.classList).toContain("menu-hidden");
-    //      done();
-    //   })
-    //
-    // });
     /* TODO: Write a new test suite named "Initial Entries" */
 
         /* TODO: Write a test that ensures when the loadFeed
@@ -136,11 +114,13 @@ $(function() {
 
 function MenuIcon() {
   this.mi = document.getElementsByClassName("menu-icon-link")[0];
-  this.clickMe = function(done) {
+
+  this.clickMe = function(done, times) {
     // let m = document.getElementsByClassName("menu-icon-link");
-    this.mi.click();
-    console.log("clicked");
-    // done();
+    for (let i=0;i<times;i++) {
+      this.mi.click();
+    }
+    done();
   }
 }
 
