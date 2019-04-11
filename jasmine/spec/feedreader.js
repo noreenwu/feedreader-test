@@ -88,7 +88,6 @@ $(function() {
         it('is NOT displayed when clicked TWICE', function(done) {
              menuIcon.clickMe(done, 1);
              // menuIcon.clickMe(done);
-             console.log("clicked from it spec (2x)");
              expect(document.body.classList).toContain("menu-hidden");
              done();
         });
@@ -104,13 +103,149 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
+    describe('Initial Entries', function() {
+
+      beforeEach(function(done) {
+          loadFeed(2, done);
+      });
+
+      it('has at least one entry after calling loadFeed', function(done) {
+          let f = document.getElementsByClassName("feed")[0];
+          let e = f.getElementsByClassName("entry");
+          expect(e.length).not.toBe(0);
+          done();
+      });
+    });
+
+
     /* TODO: Write a new test suite named "New Feed Selection" */
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+    describe('New Feed Selection', function() {
+
+      it('changes content when a new feed is loaded', function(done) {
+
+
+
+        // loadFeed(0, loadFeed(1, justCheck2(done)));  // returns feed 1
+          loadFeed(1, justCheck2(done));   // returns feeds 1
+
+          loadFeed(0, justCheck1(done));   // also returns feed 1
+
+          expect(ele.e).not.toEqual(ele2.e);
+      });
+    });
+
 }());
+
+function bubble(id, done) {
+
+  if (id > 1) {
+    console.log("bubble done");
+    done();
+  }
+  else {
+    console.log("calling bubble with ", id + 1);
+    loadFeed(id+1);
+    let f = document.getElementsByClassName("feed");
+    ele.e = f[0].getElementsByClassName("entry");
+    eleAry[id] = ele.e;
+    bubble(id+1, done);
+  }
+}
+
+
+function justCheck1(done) {
+  console.log("just check 1 ");
+
+  let f = document.getElementsByClassName("feed");
+  ele.e = f[0].getElementsByClassName("entry");
+  tester = ele.e;
+  done();
+}
+
+
+function justCheck2(done) {
+  console.log("just check 2 ");
+  let h = document.getElementsByClassName("feed");
+  ele2.e = h[0].getElementsByClassName("entry");
+  tester2 = ele2.e;
+  // done();
+}
+
+
+
+let idx=0;
+let ele = {
+  e: ""
+};
+
+let ele2 = {
+  e: ""
+};
+
+let eleAry = [ele, ele2];
+
+// function nestedLoadFeed(done, ele1, ele2, id) {
+//   console.log("nested Load Feed");
+//   let f = document.getElementsByClassName("feed");
+//   let e = f[0].getElementsByClassName("entry");
+//   ele1.e = e;
+//
+//   // next call to loadFeed
+//   loadFeed(id+1, done);
+//   f = document.getElementsByClassName("feed");
+//   let e2 = f[0].getElementsByClassName("entry");
+//   ele2.e = e2;
+//
+//   done();
+// }
+
+
+function justCheck(done, mele) {
+    console.log("just check " + idx++);
+    let f = document.getElementsByClassName("feed");
+    mele.e = f[0].getElementsByClassName("entry");
+    console.log(" just check " + mele.e[0]);
+    eleAry[idx].e = mele.e;
+    done();
+}
+
+
+function loadAndCheck(done, mele, id) {
+    loadFeed(id, done);
+    let f = document.getElementsByClassName("feed");
+    let e = f[0].getElementsByClassName("entry");
+    mele.e = e;
+    done();
+}
+
+
+
+var tester, tester2;
+
+function FeedLoader() {
+  this.theFeed = document.getElementsByClassName("feed")[0];
+  this.entries = "";
+
+  this.loadTheFeed = function(id, done) {
+    loadFeed(id, done);
+    // this.updateEntries();
+  }
+
+
+  this.updateEntries = function(done) {
+    let f = document.getElementsByClassName("feed")[0];
+    this.entries = f.getElementsByClassName("entry");
+    tester = this.entries;
+    console.log("updateEntries " + tester[0]);
+    done();
+  }
+}
 
 function MenuIcon() {
   this.mi = document.getElementsByClassName("menu-icon-link")[0];
@@ -123,8 +258,3 @@ function MenuIcon() {
     done();
   }
 }
-
-// MenuIcon.prototype.clickMe = function(this) {
-//     this.mi.clicked();
-//     console.log("clicked");
-// }
