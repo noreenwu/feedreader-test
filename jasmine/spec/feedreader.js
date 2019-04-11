@@ -135,7 +135,8 @@ $(function() {
       let ele2 = {
         e: ""
       };
-      var tester, tester2;
+      let tester = "initial";
+      let tester2 = "initial";
 
       beforeEach(function (done) {
         loadFeed(0, function(done) {
@@ -145,6 +146,7 @@ $(function() {
            console.log("BEFORE EACH");
            console.log("ele.e " + ele.e[0].textContent);
            console.log("tester " + tester[0].textContent);
+           eleAry.push(ele.e[0].textContent);
         });
         done();
       });
@@ -156,10 +158,11 @@ $(function() {
             tester2 = ele2.e;
             console.log("ele2.e " + ele2.e[0].textContent);
             console.log("tester2 " + tester2[0].textContent);
+            eleAry.push(ele2.e[0].textContent);
 
           });
-          console.log("EXPECT ele2.e " + tester2);
-          console.log("EXPECT ele.e " + tester);
+          console.log("EXPECT ele2.e " + eleAry[1]);
+          console.log("EXPECT ele.e " + eleAry[0]);
           expect(ele.e).toBeDefined();
           expect(ele2.e).toBeDefined();
 
@@ -218,7 +221,7 @@ function bubble(id, done) {
 let idx=0;
 
 
-// let eleAry = [ele, ele2];
+let eleAry = [];
 
 // function nestedLoadFeed(done, ele1, ele2, id) {
 //   console.log("nested Load Feed");
@@ -255,7 +258,7 @@ function loadAndCheck(done, mele, id) {
 }
 
 
-// 
+//
 // var tester, tester2;
 // var beforeTester;
 
