@@ -137,6 +137,7 @@ $(function() {
       };
       let tester = "initial";
       let tester2 = "initial";
+      let testVar = 1;
 
       beforeEach(function (done) {
         loadFeed(0, function(done) {
@@ -144,38 +145,59 @@ $(function() {
            ele.e = f[0].getElementsByClassName("entry");
            tester = ele.e;
            console.log("BEFORE EACH");
-           console.log("ele.e " + ele.e[0].textContent);
+           // console.log("ele.e " + ele.e[0].textContent);
            console.log("tester " + tester[0].textContent);
            eleAry.push(ele.e[0].textContent);
         });
+
+        let myAry = [];
+
+        loadFeed(1, function(done) {
+           f = document.getElementsByClassName("feed");
+           ele2.e = f[0].getElementsByClassName("entry");
+           tester2 = ele2.e;
+           console.log("BEFORE EACH 2nd LOAD");
+           // console.log("ele2.e " + ele2.e[0].textContent);
+           console.log("tester2 " + tester2[0].textContent);
+           eleAry.push(ele2.e[0].textContent);
+        });
+
+        testVar = 100;
+
+        console.log("eleAry[0] OUTSIDE OF LOADFEED " + eleAry[0]);
+
+
         done();
       });
 
-      it('the second feed loads and the DOM is populated', function(done) {
-          loadFeed(2, function(done) {
-            f2 = document.getElementsByClassName("feed");
-            ele2.e = f2[0].getElementsByClassName("entry");
-            tester2 = ele2.e;
-            console.log("ele2.e " + ele2.e[0].textContent);
-            console.log("tester2 " + tester2[0].textContent);
-            eleAry.push(ele2.e[0].textContent);
+      it('the second feed loads and the DOM is populated', function() {
+          console.log("IT section");
+          // loadFeed(2, function(done) {
+          //   f2 = document.getElementsByClassName("feed");
+          //   ele2.e = f2[0].getElementsByClassName("entry");
+          //   tester2 = ele2.e;
+          //   console.log("ele2.e " + ele2.e[0].textContent);
+          //   console.log("tester2 " + tester2[0].textContent);
+          //   eleAry.push(ele2.e[0].textContent);
+          // });
+          console.log("HELLO, this is the end of the code");
+          console.log("and my test var is " + testVar);
+          console.log("ele.e " + tester);
+          console.log("ele2.e " + tester2);
 
-          });
-          console.log("EXPECT ele2.e " + eleAry[1]);
-          console.log("EXPECT ele.e " + eleAry[0]);
+          // expect(ele.e).not.toBe("");
           expect(ele.e).toBeDefined();
           expect(ele2.e).toBeDefined();
-
+          console.log("end of EXPECTs");
           // expect(ele.e).not.toEqual(ele2.e);
           // expect(ele.e[0].textContent).not.toEqual(ele2.e[0].textContent);
-          done();
 
       });
-      afterEach(function(done) {
-          console.log("AFTER EACH");
-          loadFeed(0);
-          done();
-      });
+      // afterEach(function(done) {
+      //     console.log("AFTER EACH");
+      //     loadFeed(0, done);
+      //     // done();
+      // });
     });
 
 }());
