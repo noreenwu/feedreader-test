@@ -127,16 +127,42 @@ $(function() {
 
     describe('New Feed Selection', function() {
 
-      it('changes content when a new feed is loaded', function(done) {
 
+      beforeEach(function (done) {
+        loadFeed(0, function(done) {
+           let f = document.getElementsByClassName("feed");
+           ele.e = f[0].getElementsByClassName("entry");
+           tester = ele.e;
+           console.log("BEFORE EACH");
+           console.log("ele.e " + ele.e[0].textContent);
+           console.log("tester " + tester[0].textContent);
+        });
+        done();
+      });
+      it('the feed loads and the DOM is populated', function(done) {
 
+          expect(ele.e).toBeDefined();
+          done();
 
-        // loadFeed(0, loadFeed(1, justCheck2(done)));  // returns feed 1
-          loadFeed(1, justCheck2(done));   // returns feeds 1
+      });
+      it('the second feed loads and the DOM is populated', function(done) {
+          loadFeed(2, function(done) {
+            let f2 = document.getElementsByClassName("feed");
+            ele2.e = f2[0].getElementsByClassName("entry");
+            tester2 = ele2.e;
+            console.log("ele2.e " + ele2.e[0].textContent);
+            console.log("tester2 " + tester2[0].textContent);
 
-          loadFeed(0, justCheck1(done));   // also returns feed 1
+          });
+          expect(ele2.e).toBeDefined();
+          // expect(ele.e[0].textContent).not.toEqual(ele2.e[0].textContent);
+          done();
 
-          expect(ele.e).not.toEqual(ele2.e);
+      });
+      afterEach(function(done) {
+          console.log("AFTER EACH");
+          loadFeed(0);
+          done();
       });
     });
 
@@ -159,23 +185,23 @@ function bubble(id, done) {
 }
 
 
-function justCheck1(done) {
-  console.log("just check 1 ");
-
-  let f = document.getElementsByClassName("feed");
-  ele.e = f[0].getElementsByClassName("entry");
-  tester = ele.e;
-  done();
-}
-
-
-function justCheck2(done) {
-  console.log("just check 2 ");
-  let h = document.getElementsByClassName("feed");
-  ele2.e = h[0].getElementsByClassName("entry");
-  tester2 = ele2.e;
-  // done();
-}
+// function justCheck1(done) {
+//   console.log("just check 1 ");
+//
+//   let f = document.getElementsByClassName("feed");
+//   ele.e = f[0].getElementsByClassName("entry");
+//   tester = ele.e;
+//   // done();
+// }
+//
+//
+// function justCheck2(done) {
+//   console.log("just check 2 ");
+//   let h = document.getElementsByClassName("feed");
+//   ele2.e = h[0].getElementsByClassName("entry");
+//   tester2 = ele2.e;
+//   // done();
+// }
 
 
 
@@ -227,6 +253,7 @@ function loadAndCheck(done, mele, id) {
 
 
 var tester, tester2;
+var beforeTester;
 
 function FeedLoader() {
   this.theFeed = document.getElementsByClassName("feed")[0];
