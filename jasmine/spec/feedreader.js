@@ -126,11 +126,20 @@ $(function() {
          */
 
     describe('New Feed Selection', function() {
+      let f = "";
+      let f2 = "";
+      let ele = {
+        e: ""
+      };
 
+      let ele2 = {
+        e: ""
+      };
+      var tester, tester2;
 
       beforeEach(function (done) {
         loadFeed(0, function(done) {
-           let f = document.getElementsByClassName("feed");
+           f = document.getElementsByClassName("feed");
            ele.e = f[0].getElementsByClassName("entry");
            tester = ele.e;
            console.log("BEFORE EACH");
@@ -139,22 +148,22 @@ $(function() {
         });
         done();
       });
-      it('the feed loads and the DOM is populated', function(done) {
 
-          expect(ele.e).toBeDefined();
-          done();
-
-      });
       it('the second feed loads and the DOM is populated', function(done) {
           loadFeed(2, function(done) {
-            let f2 = document.getElementsByClassName("feed");
+            f2 = document.getElementsByClassName("feed");
             ele2.e = f2[0].getElementsByClassName("entry");
             tester2 = ele2.e;
             console.log("ele2.e " + ele2.e[0].textContent);
             console.log("tester2 " + tester2[0].textContent);
 
           });
+          console.log("EXPECT ele2.e " + tester2);
+          console.log("EXPECT ele.e " + tester);
+          expect(ele.e).toBeDefined();
           expect(ele2.e).toBeDefined();
+
+          // expect(ele.e).not.toEqual(ele2.e);
           // expect(ele.e[0].textContent).not.toEqual(ele2.e[0].textContent);
           done();
 
@@ -185,6 +194,7 @@ function bubble(id, done) {
 }
 
 
+
 // function justCheck1(done) {
 //   console.log("just check 1 ");
 //
@@ -206,15 +216,9 @@ function bubble(id, done) {
 
 
 let idx=0;
-let ele = {
-  e: ""
-};
 
-let ele2 = {
-  e: ""
-};
 
-let eleAry = [ele, ele2];
+// let eleAry = [ele, ele2];
 
 // function nestedLoadFeed(done, ele1, ele2, id) {
 //   console.log("nested Load Feed");
@@ -251,9 +255,9 @@ function loadAndCheck(done, mele, id) {
 }
 
 
-
-var tester, tester2;
-var beforeTester;
+// 
+// var tester, tester2;
+// var beforeTester;
 
 function FeedLoader() {
   this.theFeed = document.getElementsByClassName("feed")[0];
