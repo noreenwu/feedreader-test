@@ -132,51 +132,107 @@ $(function() {
         e: ""
       };
 
-      let ele2 = {
-        e: ""
-      };
-
-
-
       beforeEach(function (done) {
-
-
-        // loadFeed(0, aTest(eleAry));
-        // loadFeed(1, aTest(eleAry2))
-
-        loadFeed(0, function() {
-           f = document.getElementsByClassName("feed");
-           ele.e = f[0].getElementsByClassName("entry");
-           tester = ele.e;
-           console.log("tester " + tester[0].textContent);
-           eleAry.push(ele.e[0].textContent);
-           t.log(ele.e[0].textContent);
-        });
 
         loadFeed(1, function() {
            f = document.getElementsByClassName("feed");
            ele.e = f[0].getElementsByClassName("entry");
-           tester2 = ele.e;
-           console.log("tester2 " + tester2[0].textContent);
-           eleAry2.push(ele.e[0].textContent);
-           t2.log(ele.e[0].textContent);
-           done();
+           // tester = ele.e;
+           //console.log("tester " + tester[0].textContent);
+           eleAry.push(ele.e[0].textContent);
+           t.log(ele.e[0].textContent);
+
+           loadFeed(0, function() {
+              f = document.getElementsByClassName("feed");
+              ele.e = f[0].getElementsByClassName("entry");
+              // tester2 = ele.e;
+              // console.log("tester2 " + tester2[0].textContent);
+              eleAry2.push(ele.e[0].textContent);
+              t2.log(ele.e[0].textContent);
+              done();
+           });
+
         });
 
+        // loadFeed(2, function() {
+        //    f = document.getElementsByClassName("feed");
+        //    ele.e = f[0].getElementsByClassName("entry");
+        //    // tester2 = ele.e;
+        //    // console.log("tester2 " + tester2[0].textContent);
+        //    eleAry2.push(ele.e[0].textContent);
+        //    t2.log(ele.e[0].textContent);
+        // });
       });
 
+      it('the second feed loads and the feeds are not alike', function() {
 
-
-      it('the second feed loads and the DOM is populated', function() {
-           console.log("IT section");
+           // console.log("IT section");
            console.log("!!!OUTSIDE loadfeed tester " + t.head);
            console.log("!!!OUTSIDE loadfeed tester2 " + t2.head);
            expect(t.head).not.toEqual(t2.head);
-           expect(ele.e).toBeDefined();
-           expect(ele2.e).toBeDefined();
+           expect(t.head).toBeDefined();
+           expect(t.head).not.toEqual("");
+           expect(t2.head).not.toEqual("");
+
       });
 
 });
+
+    describe('New Feed Selection: Take 2', function() {
+      let ele = {
+        e: ""
+      };
+
+      beforeEach(function (done) {
+
+        loadFeed(0, function() {
+           f = document.getElementsByClassName("feed");
+           ele.e = f[0].getElementsByClassName("entry");
+           // tester = ele.e;
+           //console.log("tester " + tester[0].textContent);
+           eleAry.push(ele.e[0].textContent);
+           t.log(ele.e[0].textContent);
+
+           loadFeed(2, function() {
+              f = document.getElementsByClassName("feed");
+              ele.e = f[0].getElementsByClassName("entry");
+              // tester2 = ele.e;
+              // console.log("tester2 " + tester2[0].textContent);
+              eleAry2.push(ele.e[0].textContent);
+              t2.log(ele.e[0].textContent);
+              done();
+           });
+        });
+        // loadFeed(2, function() {
+        //    f = document.getElementsByClassName("feed");
+        //    ele.e = f[0].getElementsByClassName("entry");
+        //    tester = ele.e;
+        //    console.log("tester " + tester[0].textContent);
+        //    eleAry.push(ele.e[0].textContent);
+        //    t.log(ele.e[0].textContent);
+        //
+        //    });
+        //    loadFeed(3, function() {
+        //       f = document.getElementsByClassName("feed");
+        //       ele.e = f[0].getElementsByClassName("entry");
+        //       tester2 = ele.e;
+        //       console.log("tester2 " + tester2[0].textContent);
+        //       eleAry2.push(ele.e[0].textContent);
+        //       t2.log(ele.e[0].textContent);
+       });
+
+        it('Take 2: the heads are not equal', function() {
+
+             console.log("IT section");
+             console.log("###OUTSIDE loadfeed tester " + t.head);
+             console.log("###OUTSIDE loadfeed tester2 " + t2.head);
+             expect(t.head).not.toEqual(t2.head);
+
+             expect("hello").not.toBe("");
+
+        });
+
+      });
 
     //     // loadFeed(2, aTest(eleAry));
     //
