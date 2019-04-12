@@ -135,89 +135,139 @@ $(function() {
       let ele2 = {
         e: ""
       };
-      let tester = "initial";
-      let tester2 = "initial";
-      let testVar = 1;
+
+
 
       beforeEach(function (done) {
+
+
+        // loadFeed(0, aTest(eleAry));
+        // loadFeed(1, aTest(eleAry2))
+
         loadFeed(0, function(done) {
            f = document.getElementsByClassName("feed");
            ele.e = f[0].getElementsByClassName("entry");
            tester = ele.e;
-           console.log("BEFORE EACH");
-           // console.log("ele.e " + ele.e[0].textContent);
            console.log("tester " + tester[0].textContent);
            eleAry.push(ele.e[0].textContent);
+           t2.log(ele.e[0].textContent);
         });
-
-        let myAry = [];
 
         loadFeed(1, function(done) {
            f = document.getElementsByClassName("feed");
-           ele2.e = f[0].getElementsByClassName("entry");
-           tester2 = ele2.e;
-           console.log("BEFORE EACH 2nd LOAD");
-           // console.log("ele2.e " + ele2.e[0].textContent);
+           ele.e = f[0].getElementsByClassName("entry");
+           tester2 = ele.e;
            console.log("tester2 " + tester2[0].textContent);
-           eleAry.push(ele2.e[0].textContent);
+           eleAry.push(ele.e[0].textContent);
+           t2.log(ele.e[0].textContent);
         });
-
-        testVar = 100;
-
-        console.log("eleAry[0] OUTSIDE OF LOADFEED " + eleAry[0]);
-
-
         done();
+        // loadFeed(0, aTest(eleAry2));
+        // loadFeed(0, function(done) {
+        //    f = document.getElementsByClassName("feed");
+        //    ele.e = f[0].getElementsByClassName("entry");
+        //    tester = ele.e;
+        //    console.log("tester " + tester[0].textContent);
+        //    eleAry.push(ele.e[0].textContent);
+        //    t2.log(ele.e[0].textContent);
+        // });
+        // loadFeed(1, function(done) {
+        //    f = document.getElementsByClassName("feed");
+        //    ele.e = f[0].getElementsByClassName("entry");
+        //    tester = ele.e;
+        //    console.log("tester2 " + tester[0].textContent);
+        //    eleAry.push(ele.e[0].textContent);
+        //    t.log(ele.e[0].textContent);
+        //   });
+
       });
+
+
 
       it('the second feed loads and the DOM is populated', function() {
-          console.log("IT section");
-          // loadFeed(2, function(done) {
-          //   f2 = document.getElementsByClassName("feed");
-          //   ele2.e = f2[0].getElementsByClassName("entry");
-          //   tester2 = ele2.e;
-          //   console.log("ele2.e " + ele2.e[0].textContent);
-          //   console.log("tester2 " + tester2[0].textContent);
-          //   eleAry.push(ele2.e[0].textContent);
-          // });
-          console.log("HELLO, this is the end of the code");
-          console.log("and my test var is " + testVar);
-          console.log("ele.e " + tester);
-          console.log("ele2.e " + tester2);
-
-          // expect(ele.e).not.toBe("");
-          expect(ele.e).toBeDefined();
-          expect(ele2.e).toBeDefined();
-          console.log("end of EXPECTs");
-          // expect(ele.e).not.toEqual(ele2.e);
-          // expect(ele.e[0].textContent).not.toEqual(ele2.e[0].textContent);
-
+           console.log("IT section");
+           console.log("OUTSIDE loadfeed tester " + eleAry[0]);
+           console.log("OUTSIDE loadfeed tester2 " + eleAry2[0]);
+           // expect(t.head).not.toEqual(t2.head);
+           expect(ele.e).toBeDefined();
+           expect(ele2.e).toBeDefined();
       });
-      // afterEach(function(done) {
-      //     console.log("AFTER EACH");
-      //     loadFeed(0, done);
-      //     // done();
-      // });
-    });
+
+});
+
+    //     // loadFeed(2, aTest(eleAry));
+    //
+    //     // loadFeed(0, aTest(eleAry));
+    //
+    //     console.log("eleAry[0] OUTSIDE OF LOADFEED " + eleAry[0]);
+    //     console.log("eleAry[1] OUTSIDE OF LOADFEED " + eleAry[1]);
+    //     done();
+    //   });
+    //
+     //  it('the second feed loads and the DOM is populated', function() {
+     //      console.log("IT section");
+     //
+     //      expect(eleAry[0]).not.toBe("");
+     //      expect(ele.e).toBeDefined();
+     //      expect(ele2.e).toBeDefined();
+     // });
 
 }());
 
-function bubble(id, done) {
+let tester = "initial";
+let tester2 = "initial";
+let eleAry = [];
+let eleAry2 = [];
 
-  if (id > 1) {
-    console.log("bubble done");
-    done();
-  }
-  else {
-    console.log("calling bubble with ", id + 1);
-    loadFeed(id+1);
+let t = {
+    head: "",
+    log: function(str) {
+      this.head = str;
+    },
+    getHead: function() {
+      return this.head;
+    }
+ };
+
+let t2 = {
+    head: "",
+    log: function(str) {
+      this.head = str;
+    },
+    getHead: function() {
+      return this.head;
+    }
+  };
+
+function aTest(eleAry) {
+
+    let ele2 = {
+      e: ""
+    };
+
+    console.log("aTest");
     let f = document.getElementsByClassName("feed");
-    ele.e = f[0].getElementsByClassName("entry");
-    eleAry[id] = ele.e;
-    bubble(id+1, done);
-  }
+    ele2.e = f[0].getElementsByClassName("entry");
+    console.log("ele2.e " + ele2.e[0].textContent);
+    eleAry.push(ele2.e[0].textContent);
+
+//    loadFeed(1, aTest2(eleAry2));
+
 }
 
+function aTest2(eleAry) {
+
+  let ele2 = {
+    e: ""
+  };
+
+  console.log("aTest 2");
+  let f = document.getElementsByClassName("feed");
+  ele2.e = f[0].getElementsByClassName("entry");
+   // console.log("ele2.e " + ele2.e[0].textContent);
+  console.log("ele2.e " + ele2.e[0].textContent);
+  eleAry.push(ele2.e[0].textContent);
+}
 
 
 // function justCheck1(done) {
@@ -243,23 +293,6 @@ function bubble(id, done) {
 let idx=0;
 
 
-let eleAry = [];
-
-// function nestedLoadFeed(done, ele1, ele2, id) {
-//   console.log("nested Load Feed");
-//   let f = document.getElementsByClassName("feed");
-//   let e = f[0].getElementsByClassName("entry");
-//   ele1.e = e;
-//
-//   // next call to loadFeed
-//   loadFeed(id+1, done);
-//   f = document.getElementsByClassName("feed");
-//   let e2 = f[0].getElementsByClassName("entry");
-//   ele2.e = e2;
-//
-//   done();
-// }
-
 
 function justCheck(done, mele) {
     console.log("just check " + idx++);
@@ -280,9 +313,6 @@ function loadAndCheck(done, mele, id) {
 }
 
 
-//
-// var tester, tester2;
-// var beforeTester;
 
 function FeedLoader() {
   this.theFeed = document.getElementsByClassName("feed")[0];
