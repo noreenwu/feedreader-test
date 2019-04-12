@@ -144,41 +144,24 @@ $(function() {
         // loadFeed(0, aTest(eleAry));
         // loadFeed(1, aTest(eleAry2))
 
-        loadFeed(0, function(done) {
+        loadFeed(0, function() {
            f = document.getElementsByClassName("feed");
            ele.e = f[0].getElementsByClassName("entry");
            tester = ele.e;
            console.log("tester " + tester[0].textContent);
            eleAry.push(ele.e[0].textContent);
-           t2.log(ele.e[0].textContent);
+           t.log(ele.e[0].textContent);
         });
 
-        loadFeed(1, function(done) {
+        loadFeed(1, function() {
            f = document.getElementsByClassName("feed");
            ele.e = f[0].getElementsByClassName("entry");
            tester2 = ele.e;
            console.log("tester2 " + tester2[0].textContent);
-           eleAry.push(ele.e[0].textContent);
+           eleAry2.push(ele.e[0].textContent);
            t2.log(ele.e[0].textContent);
+           done();
         });
-        done();
-        // loadFeed(0, aTest(eleAry2));
-        // loadFeed(0, function(done) {
-        //    f = document.getElementsByClassName("feed");
-        //    ele.e = f[0].getElementsByClassName("entry");
-        //    tester = ele.e;
-        //    console.log("tester " + tester[0].textContent);
-        //    eleAry.push(ele.e[0].textContent);
-        //    t2.log(ele.e[0].textContent);
-        // });
-        // loadFeed(1, function(done) {
-        //    f = document.getElementsByClassName("feed");
-        //    ele.e = f[0].getElementsByClassName("entry");
-        //    tester = ele.e;
-        //    console.log("tester2 " + tester[0].textContent);
-        //    eleAry.push(ele.e[0].textContent);
-        //    t.log(ele.e[0].textContent);
-        //   });
 
       });
 
@@ -186,9 +169,9 @@ $(function() {
 
       it('the second feed loads and the DOM is populated', function() {
            console.log("IT section");
-           console.log("OUTSIDE loadfeed tester " + eleAry[0]);
-           console.log("OUTSIDE loadfeed tester2 " + eleAry2[0]);
-           // expect(t.head).not.toEqual(t2.head);
+           console.log("!!!OUTSIDE loadfeed tester " + t.head);
+           console.log("!!!OUTSIDE loadfeed tester2 " + t2.head);
+           expect(t.head).not.toEqual(t2.head);
            expect(ele.e).toBeDefined();
            expect(ele2.e).toBeDefined();
       });
