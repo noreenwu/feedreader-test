@@ -77,7 +77,19 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
 
-        let menuIcon = new MenuIcon();
+        class MenuIcon {
+             constructor() {
+                this.mi = document.getElementsByClassName("menu-icon-link")[0];
+             }
+
+             clickMe = function (times) {
+               for (let i=0;i<times;i++) {
+                 this.mi.click();
+               }
+             }
+        }
+
+        let menIcon = new MenuIcon();
 
         beforeEach(function() {
             let b = document.getElementsByTagName("body")[0];
@@ -90,26 +102,20 @@ $(function() {
         });
 
         it('is displayed when clicked once', function() {
-            // menuIcon.clickMe(done, 1);
-            menuIcon.clickMe(1);
+            menIcon.clickMe(1);
             expect(document.body.classList).not.toContain("menu-hidden");
-            // done();
          });
 
         it('is NOT displayed when clicked TWICE', function() {
-             // menuIcon.clickMe(done, 2);
-             menuIcon.clickMe(2);
+             menIcon.clickMe(2);
              expect(document.body.classList).toContain("menu-hidden");
-             // done();
         });
         afterEach(function() {
             let b = document.getElementsByTagName("body")[0];
 
-            console.log("AFTER EACH b.classList " + b.classList);
             if (! b.classList.contains("menu-hidden")) {
                 b.classList.add("menu-hidden");
-                console.log("AFTER EACH putting menu away");
-                // put the menu away after testing
+                //clean up: put the menu away after testing
             }
         })
 
@@ -130,11 +136,10 @@ $(function() {
           loadFeed(2, done);
       });
 
-      it('has at least one entry after calling loadFeed', function(done) {
+      it('has at least one entry after calling loadFeed', function() {
           let f = document.getElementsByClassName("feed")[0];
           let e = f.getElementsByClassName("entry");
           expect(e.length).not.toBe(0);
-          done();
       });
     });
 
@@ -147,25 +152,36 @@ $(function() {
          */
 
     describe('New Feed Selection', function() {
-      let f = "";
-      let f2 = "";
-      let ele = {
-        e: ""
-      };
+      let f = "";          // the feed element
+      let e = "";          // the entry element
+
+      class Headline {
+          constructor() {
+            this.head = "";
+          }
+
+          getHead() {
+            return this.head;
+          }
+          log(str) {
+            this.head = str;
+          }
+      }
+
+      let t = new Headline();
+      let t2 = new Headline();
 
       beforeEach(function (done) {
 
         loadFeed(1, function() {
            f = document.getElementsByClassName("feed");
-           ele.e = f[0].getElementsByClassName("entry");
-           eleAry.push(ele.e[0].textContent);
-           t.log(ele.e[0].textContent);
+           e = f[0].getElementsByClassName("entry");
+           t.log(e[0].textContent);
 
-           loadFeed(0, function() {
+           loadFeed(2, function() {
               f = document.getElementsByClassName("feed");
-              ele.e = f[0].getElementsByClassName("entry");
-              eleAry2.push(ele.e[0].textContent);
-              t2.log(ele.e[0].textContent);
+              e = f[0].getElementsByClassName("entry");
+              t2.log(e[0].textContent);
               done();
            });
 
@@ -173,98 +189,28 @@ $(function() {
       });
 
       it('the second feed loads and the feeds are not alike', function() {
-
-           // console.log("IT section");
            console.log("!!!OUTSIDE loadfeed tester " + t.head);
            console.log("!!!OUTSIDE loadfeed tester2 " + t2.head);
            expect(t.head).not.toEqual(t2.head);
            expect(t.head).toBeDefined();
+           expect(t2.head).toBeDefined();
            expect(t.head).not.toEqual("");
            expect(t2.head).not.toEqual("");
 
       });
-
-});
-
-    describe('New Feed Selection: Take 2', function() {
-      let ele = {
-        e: ""
-      };
-
-      beforeEach(function (done) {
-
-        loadFeed(3, function() {
-           f = document.getElementsByClassName("feed");
-           ele.e = f[0].getElementsByClassName("entry");
-           eleAry.push(ele.e[0].textContent);
-           t.log(ele.e[0].textContent);
-
-           loadFeed(2, function() {
-              f = document.getElementsByClassName("feed");
-              ele.e = f[0].getElementsByClassName("entry");
-              eleAry2.push(ele.e[0].textContent);
-              t2.log(ele.e[0].textContent);
-              done();
-           });
-        });
-       });
-
-        it('Take 2: the heads are not equal', function() {
-
-             console.log("IT section");
-             console.log("###OUTSIDE loadfeed tester " + t.head);
-             console.log("###OUTSIDE loadfeed tester2 " + t2.head);
-             expect(t.head).not.toEqual(t2.head);
-
-             expect("hello").not.toBe("");
-
-        });
-
-      });
-
+    });
 }());
 
 
-let eleAry = [];
-let eleAry2 = [];
 
-let t = {
-    head: "",
-    log: function(str) {
-      this.head = str;
-    },
-    getHead: function() {
-      return this.head;
-    }
- };
-
-let t2 = {
-    head: "",
-    log: function(str) {
-      this.head = str;
-    },
-    getHead: function() {
-      return this.head;
-    }
-  };
-
-
-
-function MenuIcon() {
-  this.mi = document.getElementsByClassName("menu-icon-link")[0];
-
-  // this.clickMe = function(done, times) {
-  //   // let m = document.getElementsByClassName("menu-icon-link");
-  //   for (let i=0;i<times;i++) {
-  //     this.mi.click();
-  //   }
-  //   done();
-  // }
-
-  this.clickMe = function(times) {
-    // let m = document.getElementsByClassName("menu-icon-link");
-    for (let i=0;i<times;i++) {
-      this.mi.click();
-    }
-  }
-}
+ //
+ //
+ // function MenuIcon() {
+ //   this.mi = document.getElementsByClassName("menu-icon-link")[0];
+ //
+ //   this.clickMe = function(times) {
+ //     for (let i=0;i<times;i++) {
+ //       this.mi.click();
+ //     }
+ //   }
+ // }
