@@ -63,34 +63,55 @@ $(function() {
          * hiding/showing of the menu element.
          */
 
-
     describe('The menu', function() {
+      it('is hidden by default', function() {
+          expect(document.body.classList).toContain("menu-hidden");
+      });
+    });
+
+
+    describe('The menu slides in and out', function() {
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
 
-        var menuIcon = new MenuIcon();
+        let menuIcon = new MenuIcon();
 
-        it('is hidden by default', function(done) {
-            menuIcon.clickMe(done, 0);
-            expect(document.body.classList).toContain("menu-hidden");
-            done();
+        beforeEach(function() {
+            let b = document.getElementsByTagName("body")[0];
+
+            console.log("b.classList " + b.classList);
+            if (! b.classList.contains("menu-hidden")) {
+                b.classList.add("menu-hidden");
+                // start from assumption that the menu is hidden
+            }
         });
 
-        it('is displayed when clicked once', function(done) {
-            menuIcon.clickMe(done, 1);
+        it('is displayed when clicked once', function() {
+            // menuIcon.clickMe(done, 1);
+            menuIcon.clickMe(1);
             expect(document.body.classList).not.toContain("menu-hidden");
-            done();
+            // done();
          });
 
-        it('is NOT displayed when clicked TWICE', function(done) {
-             menuIcon.clickMe(done, 1);
-             // menuIcon.clickMe(done);
+        it('is NOT displayed when clicked TWICE', function() {
+             // menuIcon.clickMe(done, 2);
+             menuIcon.clickMe(2);
              expect(document.body.classList).toContain("menu-hidden");
-             done();
+             // done();
         });
+        afterEach(function() {
+            let b = document.getElementsByTagName("body")[0];
+
+            console.log("AFTER EACH b.classList " + b.classList);
+            if (! b.classList.contains("menu-hidden")) {
+                b.classList.add("menu-hidden");
+                console.log("AFTER EACH putting menu away");
+                // put the menu away after testing
+            }
+        })
 
     });
 
@@ -137,31 +158,18 @@ $(function() {
         loadFeed(1, function() {
            f = document.getElementsByClassName("feed");
            ele.e = f[0].getElementsByClassName("entry");
-           // tester = ele.e;
-           //console.log("tester " + tester[0].textContent);
            eleAry.push(ele.e[0].textContent);
            t.log(ele.e[0].textContent);
 
            loadFeed(0, function() {
               f = document.getElementsByClassName("feed");
               ele.e = f[0].getElementsByClassName("entry");
-              // tester2 = ele.e;
-              // console.log("tester2 " + tester2[0].textContent);
               eleAry2.push(ele.e[0].textContent);
               t2.log(ele.e[0].textContent);
               done();
            });
 
         });
-
-        // loadFeed(2, function() {
-        //    f = document.getElementsByClassName("feed");
-        //    ele.e = f[0].getElementsByClassName("entry");
-        //    // tester2 = ele.e;
-        //    // console.log("tester2 " + tester2[0].textContent);
-        //    eleAry2.push(ele.e[0].textContent);
-        //    t2.log(ele.e[0].textContent);
-        // });
       });
 
       it('the second feed loads and the feeds are not alike', function() {
@@ -185,40 +193,20 @@ $(function() {
 
       beforeEach(function (done) {
 
-        loadFeed(0, function() {
+        loadFeed(3, function() {
            f = document.getElementsByClassName("feed");
            ele.e = f[0].getElementsByClassName("entry");
-           // tester = ele.e;
-           //console.log("tester " + tester[0].textContent);
            eleAry.push(ele.e[0].textContent);
            t.log(ele.e[0].textContent);
 
            loadFeed(2, function() {
               f = document.getElementsByClassName("feed");
               ele.e = f[0].getElementsByClassName("entry");
-              // tester2 = ele.e;
-              // console.log("tester2 " + tester2[0].textContent);
               eleAry2.push(ele.e[0].textContent);
               t2.log(ele.e[0].textContent);
               done();
            });
         });
-        // loadFeed(2, function() {
-        //    f = document.getElementsByClassName("feed");
-        //    ele.e = f[0].getElementsByClassName("entry");
-        //    tester = ele.e;
-        //    console.log("tester " + tester[0].textContent);
-        //    eleAry.push(ele.e[0].textContent);
-        //    t.log(ele.e[0].textContent);
-        //
-        //    });
-        //    loadFeed(3, function() {
-        //       f = document.getElementsByClassName("feed");
-        //       ele.e = f[0].getElementsByClassName("entry");
-        //       tester2 = ele.e;
-        //       console.log("tester2 " + tester2[0].textContent);
-        //       eleAry2.push(ele.e[0].textContent);
-        //       t2.log(ele.e[0].textContent);
        });
 
         it('Take 2: the heads are not equal', function() {
@@ -234,27 +222,9 @@ $(function() {
 
       });
 
-    //     // loadFeed(2, aTest(eleAry));
-    //
-    //     // loadFeed(0, aTest(eleAry));
-    //
-    //     console.log("eleAry[0] OUTSIDE OF LOADFEED " + eleAry[0]);
-    //     console.log("eleAry[1] OUTSIDE OF LOADFEED " + eleAry[1]);
-    //     done();
-    //   });
-    //
-     //  it('the second feed loads and the DOM is populated', function() {
-     //      console.log("IT section");
-     //
-     //      expect(eleAry[0]).not.toBe("");
-     //      expect(ele.e).toBeDefined();
-     //      expect(ele2.e).toBeDefined();
-     // });
-
 }());
 
-let tester = "initial";
-let tester2 = "initial";
+
 let eleAry = [];
 let eleAry2 = [];
 
@@ -278,108 +248,23 @@ let t2 = {
     }
   };
 
-function aTest(eleAry) {
 
-    let ele2 = {
-      e: ""
-    };
-
-    console.log("aTest");
-    let f = document.getElementsByClassName("feed");
-    ele2.e = f[0].getElementsByClassName("entry");
-    console.log("ele2.e " + ele2.e[0].textContent);
-    eleAry.push(ele2.e[0].textContent);
-
-//    loadFeed(1, aTest2(eleAry2));
-
-}
-
-function aTest2(eleAry) {
-
-  let ele2 = {
-    e: ""
-  };
-
-  console.log("aTest 2");
-  let f = document.getElementsByClassName("feed");
-  ele2.e = f[0].getElementsByClassName("entry");
-   // console.log("ele2.e " + ele2.e[0].textContent);
-  console.log("ele2.e " + ele2.e[0].textContent);
-  eleAry.push(ele2.e[0].textContent);
-}
-
-
-// function justCheck1(done) {
-//   console.log("just check 1 ");
-//
-//   let f = document.getElementsByClassName("feed");
-//   ele.e = f[0].getElementsByClassName("entry");
-//   tester = ele.e;
-//   // done();
-// }
-//
-//
-// function justCheck2(done) {
-//   console.log("just check 2 ");
-//   let h = document.getElementsByClassName("feed");
-//   ele2.e = h[0].getElementsByClassName("entry");
-//   tester2 = ele2.e;
-//   // done();
-// }
-
-
-
-let idx=0;
-
-
-
-function justCheck(done, mele) {
-    console.log("just check " + idx++);
-    let f = document.getElementsByClassName("feed");
-    mele.e = f[0].getElementsByClassName("entry");
-    console.log(" just check " + mele.e[0]);
-    eleAry[idx].e = mele.e;
-    done();
-}
-
-
-function loadAndCheck(done, mele, id) {
-    loadFeed(id, done);
-    let f = document.getElementsByClassName("feed");
-    let e = f[0].getElementsByClassName("entry");
-    mele.e = e;
-    done();
-}
-
-
-
-function FeedLoader() {
-  this.theFeed = document.getElementsByClassName("feed")[0];
-  this.entries = "";
-
-  this.loadTheFeed = function(id, done) {
-    loadFeed(id, done);
-    // this.updateEntries();
-  }
-
-
-  this.updateEntries = function(done) {
-    let f = document.getElementsByClassName("feed")[0];
-    this.entries = f.getElementsByClassName("entry");
-    tester = this.entries;
-    console.log("updateEntries " + tester[0]);
-    done();
-  }
-}
 
 function MenuIcon() {
   this.mi = document.getElementsByClassName("menu-icon-link")[0];
 
-  this.clickMe = function(done, times) {
+  // this.clickMe = function(done, times) {
+  //   // let m = document.getElementsByClassName("menu-icon-link");
+  //   for (let i=0;i<times;i++) {
+  //     this.mi.click();
+  //   }
+  //   done();
+  // }
+
+  this.clickMe = function(times) {
     // let m = document.getElementsByClassName("menu-icon-link");
     for (let i=0;i<times;i++) {
       this.mi.click();
     }
-    done();
   }
 }
