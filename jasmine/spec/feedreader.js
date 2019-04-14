@@ -1,3 +1,15 @@
+/*  Noreen Wu
+ *  April 14, 2019
+ *  Udacity Project: Testing a Feedreader
+ *
+ *  This testfile describes and implements several tests on the Feedreader:
+ *  1) that the feeds' names and urls are configured properly, 2) that the
+ *  menu is hidden by default and behaves appropriately when its
+ *  toggle button is clicked, 3) that the loading of the feeds
+ *  results in data and finally 4) that the loading of more than
+ *  one feed results in changing of content.
+ */
+
 /* feedreader.js
  *
  * This is the spec file that Jasmine will read and contains
@@ -32,7 +44,7 @@ $(function() {
          * and that the URL is not empty.
          */
 
-         it('has a non-blank url', function() {
+         it('each feed has a non-blank url', function() {
               for (let i=0;i<allFeeds.length;i++) {
                 expect(allFeeds[i].url).toBeDefined();
                 expect(allFeeds[i].url).not.toBe("");
@@ -40,13 +52,12 @@ $(function() {
          });
 
 
-
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
 
-         it('has a non-blank name', function() {
+         it('each feed has a non-blank name', function() {
             for (let i=0;i<allFeeds.length;i++) {
               expect(allFeeds[i].name).toBeDefined();
               expect(allFeeds[i].name).not.toBe("");
@@ -66,6 +77,8 @@ $(function() {
     describe('The menu', function() {
       it('is hidden by default', function() {
           expect(document.body.classList).toContain("menu-hidden");
+          // if the body element contains the class "menu-hidden,"
+          //  it will not appear on-screen and will be hidden to the user
       });
     });
 
@@ -77,12 +90,12 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
 
-        class MenuIcon {
+        class MenuIcon {  // this helps to manage the clicking on the menu icon
              constructor() {
                 this.mi = document.getElementsByClassName("menu-icon-link")[0];
              }
 
-             clickMe = function (times) {
+             clickMe = function(times) {
                for (let i=0;i<times;i++) {
                  this.mi.click();
                }
@@ -94,19 +107,20 @@ $(function() {
         beforeEach(function() {
             let b = document.getElementsByTagName("body")[0];
 
-            console.log("b.classList " + b.classList);
             if (! b.classList.contains("menu-hidden")) {
                 b.classList.add("menu-hidden");
-                // start from assumption that the menu is hidden
+                // before each test, start from assumption (and state) that the menu is hidden:
+                //   this allows the tests for 2 clicks or 1 click to be performed
+                //   in either order
             }
         });
 
-        it('is displayed when clicked once', function() {
+        it('menu is displayed when clicked once', function() {
             menIcon.clickMe(1);
             expect(document.body.classList).not.toContain("menu-hidden");
          });
 
-        it('is NOT displayed when clicked TWICE', function() {
+        it('menu is NOT displayed when clicked TWICE', function() {
              menIcon.clickMe(2);
              expect(document.body.classList).toContain("menu-hidden");
         });
@@ -134,12 +148,15 @@ $(function() {
 
       beforeEach(function(done) {
           loadFeed(2, done);
+          // by calling this in beforeEach(), done can be signalled
+          //  at the end of the load and the it() test will still
+          //  be run
       });
 
-      it('has at least one entry after calling loadFeed', function() {
+      it('loading a feed results in at least one entry', function() {
           let f = document.getElementsByClassName("feed")[0];
           let e = f.getElementsByClassName("entry");
-          expect(e.length).not.toBe(0);
+          expect(e.length).toBeGreaterThan(0);
       });
     });
 
@@ -155,11 +172,10 @@ $(function() {
       let f = "";          // the feed element
       let e = "";          // the entry element
 
-      class Headline {
+      class Headline {     // Headline helps to capture values loaded by loadFeed calls
           constructor() {
             this.head = "";
           }
-
           getHead() {
             return this.head;
           }
@@ -182,35 +198,22 @@ $(function() {
               f = document.getElementsByClassName("feed");
               e = f[0].getElementsByClassName("entry");
               t2.log(e[0].textContent);
-              done();
-           });
-
+              done();     // placement of done() is key in this test.
+           });            // It has to be called last, in the last loadFeed
+                          // which needs to be within the beforeEach.
+                          // The loadFeed functions need to be nested in order
+                          // to get them to run sequentially rather than
+                          // randomly or at the same time, so that the content
+                          // of each separate load can be captured.
         });
       });
 
-      it('the second feed loads and the feeds are not alike', function() {
-           console.log("!!!OUTSIDE loadfeed tester " + t.head);
-           console.log("!!!OUTSIDE loadfeed tester2 " + t2.head);
-           expect(t.head).not.toEqual(t2.head);
-           expect(t.head).toBeDefined();
-           expect(t2.head).toBeDefined();
-           expect(t.head).not.toEqual("");
-           expect(t2.head).not.toEqual("");
-
+      it('a second feed load results in different content than the first feed load', function() {
+           expect(t.getHead()).toBeDefined();
+           expect(t2.getHead()).toBeDefined();
+           expect(t.getHead()).not.toEqual("");
+           expect(t2.getHead()).not.toEqual("");
+           expect(t.getHead()).not.toEqual(t2.getHead());
       });
     });
 }());
-
-
-
- //
- //
- // function MenuIcon() {
- //   this.mi = document.getElementsByClassName("menu-icon-link")[0];
- //
- //   this.clickMe = function(times) {
- //     for (let i=0;i<times;i++) {
- //       this.mi.click();
- //     }
- //   }
- // }
