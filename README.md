@@ -22,7 +22,7 @@ below the article headlines.
 
 index.html: is the html base for the feedreader, and includes the script files
 js/app.js (containing all the feedreader functionality being tested), as well
-as jasmine/spec/feedreader.js (contains the feedreader tests).
+as jasmine/spec/feedreader.js (which contains the feedreader tests).
 
 Also included are css files css/icomoon.css, css/normalize.css and css/style.css,
 and the font files fonts/icomoon.eot, fonts/icomoon.svg, fonts/icomoon.ttf, and
