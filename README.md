@@ -5,7 +5,7 @@ This project includes Jasmine tests that operate on a web-based feedreader.
 Specifically what is tested includes 1) definition of feeds that are configured
 and available to the end user, 2) the proper functioning of the sliding menu,
 which allows the user to browse the available feeds, 3) that the loading of
-the feeds pulls in data and finally 4) that the loading of more than one feed
+a feed pulls in data and finally 4) that the loading of more than one feed
 results in different content from the previous load.
 
 
